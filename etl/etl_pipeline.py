@@ -18,15 +18,19 @@ def extract():
 # Transform function: Analyze and clean data
 def transform(raw_data):
     try:
+        # Convert relevant columns to datetime
+        raw_data['due_date'] = pd.to_datetime(raw_data['due_date'], errors='coerce')
+        raw_data['created_at'] = pd.to_datetime(raw_data['created_at'], errors='coerce')
+        raw_data['completed_at'] = pd.to_datetime(raw_data['completed_at'], errors='coerce')
+
         # Filter tasks that are overdue or not completed
-        raw_data['status'] = raw_data['status'].str.lower()
         overdue_tasks = raw_data[raw_data['due_date'] < pd.to_datetime('today')]
-        overdue_tasks = overdue_tasks[overdue_tasks['status'] != 'done']
+        overdue_tasks = overdue_tasks[overdue_tasks['status'].str.lower() != 'done']
         
         # Process workflow performance (e.g., completion time)
-        raw_data['completion_time'] = pd.to_datetime(raw_data['completed_at']) - pd.to_datetime(raw_data['created_at'])
+        raw_data['completion_time'] = raw_data['completed_at'] - raw_data['created_at']
         raw_data['completion_time'] = raw_data['completion_time'].dt.days
-        
+
         print("Data transformed successfully")
         return raw_data, overdue_tasks
     except Exception as e:
