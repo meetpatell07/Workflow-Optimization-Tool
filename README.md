@@ -23,5 +23,13 @@ This project automates the **ETL** process for analyzing project management data
 
 3. **Open Power BI** and load the `processed_data.csv` to create visualizations.
 
+## Screenshots
+
+### ETL Pipeline in Action
+![ETL Pipeline](./images/Screenshot%202025-01-08%20220836.png)
+
+### Power BI Reports
+![Power BI Report](./images/Screenshot%20(181).png)
+
 ## License
 This project is licensed under the MIT License.
